@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+    <title>Applicant Details - Lanka Job Post</title>
+    <meta
+      name="description"
+      content="Lanka Job post is online recruitment managment system for recruitment companies and for the easy use of the applicants."
+    />
+    <link rel="stylesheet" href="adminast/bootstrap/css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </head>
+
+  <body id="page-top">
+  <script th:if="${isStatusUpdated}==1">
+		$(document).ready(function () {
+			$("#modal-success").modal();
+         });
+  </script>
+  <script th:if="${isStatusUpdated}==0">
+		$(document).ready(function () {
+			$("#modal-danger").modal();
+         });
+ </script>
+ 
+    <div id="wrapper">
+      <nav
+        class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0"
+      >
+        <div class="container-fluid d-flex flex-column p-0">
+          <a
+            class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
+            href="#"
+          >
+            <div class="sidebar-brand-text mx-3">
+              <span>Lanka Job Post</span>
+            </div>
+          </a>
+          <hr class="sidebar-divider my-0" />
+          <ul class="nav navbar-nav text-light" id="accordionSidebar">
+	             <li class="nav-item" role="presentation"><a class="nav-link" href="/admin"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+	             <li class="nav-item" role="presentation"><a class="nav-link" href="/admin-jobs"><i class="fas fa-table"></i><span>Jobs</span></a></li>
+	             <li class="nav-item" role="presentation"><a class="nav-link active" href="/admin-applicants"><i class="fas fa-exclamation-circle"></i><span>Applicants</span></a></li>
+	             <li class="nav-item" role="presentation"><a class="nav-link" href="/signoutAdmin"><i class="fas fa-exclamation-circle"></i><span>Signout</span></a></li>
+       	  </ul>
+          <div class="text-center d-none d-md-inline">
+            <button
+              class="btn rounded-circle border-0"
+              id="sidebarToggle"
+              type="button"
+            ></button>
+          </div>
+        </div>
+      </nav>
+      <div class="d-flex flex-column" id="content-wrapper">
+        <div id="content" class="container-fluid">
+          <div class="row mt-5">
+            <div class="col">
+              <form action="/adminapplicatStatusUpdate" method="post">
+	              <input
+	                type="submit"
+	                class="btn btn-primary float-right mx-3"
+	                value="Update"
+	              />
+	              <input type="hidden" name="userJobID" th:value="${user.id}">
+	              <select
+	                name="status"
+	                class="form-control float-right btn btn-outline-primary"
+	                id="status"
+	                style="width: 25%;"
+	                ><option value="1">Hired</option>
+	                <option value="-1">Rejected</option>
+	              </select>
+              </form>
+            </div>
+          </div>
+          <div class="row mt-5">
+            <div class="col">
+              <div class="card p-3">
+                <!--data row-->
+                <div class="row">
+                  <div class="col-3">
+                    <h4
+                      class="font-normal text-gray-600"
+                      style="font-size:18px;"
+                    >
+                      Name
+                    </h4>
+                  </div>
+                  <div class="col-9" style="color: black;">
+                    <p th:text="${user.getUser.fName}+' '+${user.getUser.lName}"></p>
+                  </div>
+                </div>
+                <hr class="my-2 mx-4" />
+                <!--/data row-->
+                <!--data row-->
+                <div class="row">
+                  <div class="col-3">
+                    <h4
+                      class="font-normal text-gray-600"
+                      style="font-size:18px;"
+                    >
+                      Job
+                    </h4>
+                  </div>
+                  <div class="col-9" style="color: black;">
+                    <p th:text="${user.getJob.title}"></p>
+                  </div>
+                </div>
+                <hr class="my-2 mx-4" />
+                <!--/data row-->
+                <!--data row-->
+                <div class="row">
+                  <div class="col-3">
+                    <h4
+                      class="font-normal text-gray-600"
+                      style="font-size:18px;"
+                    >
+                      E-mail
+                    </h4>
+                  </div>
+                  <div class="col-9" style="color: black;">
+                    <p th:text="${user.getUser.email}"></p>
+                  </div>
+                </div>
+                <hr class="my-2 mx-4" />
+                <!--/data row-->
+                <!--data row-->
+                <div class="row">
+                  <div class="col-3">
+                    <h4
+                      class="font-normal text-gray-600"
+                      style="font-size:18px;"
+                    >
+                      Phone
+                    </h4>
+                  </div>
+                  <div class="col-9" style="color: black;">
+                    <p th:text="${user.getUser.phone}"></p>
+                  </div>
+                </div>
+                <hr class="my-2 mx-4" />
+                <!--/data row-->
+                <!--data row-->
+                <div class="row">
+                  <div class="col-3">
+                    <h4
+                      class="font-normal text-gray-600"
+                      style="font-size:18px;"
+                    >
+                      Status
+                    </h4>
+                  </div>
+                  <div class="col-9" style="color: black;">
+                    <div th:switch="${user.status}">
+                    	<p th:case="1">Hired</p>
+                    	<p th:case="0">Pending</p>
+                    	<p th:case="-1">Rejected</p>
+                    </div>
+                  </div>
+                </div>
+                <hr class="my-2 mx-4" />
+                <!--/data row-->
+                <!--data row-->
+                <!--data row-->
+                <div class="row">
+                  <div class="col-3">
+                    <h4
+                      class="font-normal text-gray-600"
+                      style="font-size:18px;"
+                    >
+                      Address
+                    </h4>
+                  </div>
+                  <div class="col-9" style="color: black;">
+                    <p th:text="${user.getUser.address}"></p>
+                  </div>
+                </div>
+                <hr class="my-2 mx-4" />
+                <!--data row-->
+                <div class="row">
+                  <div class="col-3">
+                    <h4
+                      class="font-normal text-gray-600"
+                      style="font-size:18px;"
+                    >
+                      About
+                    </h4>
+                  </div>
+                  <div class="col-9" style="color: black;">
+                    <p th:text="${user.getUser.about}"></p>
+                  </div>
+                </div>
+                <hr class="my-2 mx-4" />
+                <!--data row-->
+                <div class="row">
+                  <div class="col-3">
+                    <h4
+                      class="font-normal text-gray-600"
+                      style="font-size:18px;"
+                    >
+                      School
+                    </h4>
+                  </div>
+                  <div class="col-9" style="color: black;">
+                    <p th:text="${user.getUser.School}"></p>
+                  </div>
+                </div>
+                <hr class="my-2 mx-4" />
+                <!--data row-->
+                <div class="row">
+                  <div class="col-3">
+                    <h4
+                      class="font-normal text-gray-600"
+                      style="font-size:18px;"
+                    >
+                      University
+                    </h4>
+                  </div>
+                  <div class="col-9" style="color: black;">
+                    <p th:text="${user.getUser.uni}"></p>
+                  </div>
+                </div>
+                <hr class="my-2 mx-4" />
+                <!--data row-->
+                <div class="row">
+                  <div class="col-3">
+                    <h4
+                      class="font-normal text-gray-600"
+                      style="font-size:18px;"
+                    >
+                      Degree
+                    </h4>
+                  </div>
+                  <div class="col-9" style="color: black;">
+                    <p th:text="${user.getUser.degree}"></p>
+                  </div>
+                </div>
+                <hr class="my-2 mx-4" />
+                <!--data row-->
+                <div class="row">
+                  <div class="col-3">
+                    <h4
+                      class="font-normal text-gray-600"
+                      style="font-size:18px;"
+                    >
+                      Class
+                    </h4>
+                  </div>
+                  <div class="col-9" style="color: black;">
+                    <p th:text="${user.getUser.cls}"></p>
+                  </div>
+                </div>
+                <hr class="my-2 mx-4" />
+                <!--data row-->
+                
+              </div>
+            </div>
+          </div>
+           <!--Success Modal-->
+                <div id="modal-success" class="modal modal-message modal-success fade" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header text-center" style="padding-left: 47.5%;padding-right:52.5%;border-bottom: 3px solid #a0d468; ">
+                                <i class="far fa-2x fa-check-circle " style="color:#17A673;"></i>
+                            </div>
+                            <div class="modal-title text-center"><h4>Success</h4></div>
+                            <div class="modal-body text-center">User status updated.</div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+                            </div>
+                        </div> <!-- / .modal-content -->
+                    </div> <!-- / .modal-dialog -->
+                </div>
+                <!--Danger Modal Templates-->
+                <div id="modal-danger" class="modal modal-message modal-danger fade" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header" style=" color: #d73d32;border-bottom: 3px solid #e46f61;padding-left: 47.5%;padding-right:52.5%;">
+                                <i class="fas fa-2x fa-exclamation-circle"></i>
+                            </div>
+                            <div class="modal-title text-center"><h4>Unsuccess</h4></div>
+
+                            <div class="modal-body text-center">Something went wrong while updating user status.try again</div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
+                            </div>
+                        </div> <!-- / .modal-content -->
+                    </div> <!-- / .modal-dialog -->
+                </div>
+        </div>
+        <footer class="bg-white sticky-footer">
+          <div class="container my-auto">
+            <div class="text-center my-auto copyright">
+              <span>Copyright © Lanka Job Post 2021</span>
+            </div>
+          </div>
+        </footer>
+      </div>
+      <a class="border rounded d-inline scroll-to-top" href="#page-top"
+        ><i class="fas fa-angle-up"></i
+      ></a>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+    <script src="adminast/js/script.min.js"></script>
+  </body>
+</html>
